@@ -1,7 +1,7 @@
 #Browse to the folder containing the Files
 from tkinter import Tk, filedialog
 import os
-from PDD_Module import *
+from PDD_Module2 import *
 from easygui import multenterbox, buttonbox, enterbox, msgbox, choicebox
 from pandas import ExcelWriter, DataFrame
 from datetime import date
@@ -155,54 +155,6 @@ if BadName != []:
     msgbox("The following files were incorrectly labelled please correct the files and re-run. No data was written to the database:"+str(BadName))
     exit()
 
-
-conn.commit() # The commit line locks in the entry.
-
-
-    # with open('C:/Users/cgillies/Desktop/Python_3/GIT Some/TwoDataSets-PDD/DataBaseFormat.xlsx',"a") as csvfile:
-    #     writer=csv.writer(csvfile)
-    #     writer.writerow([Subset])
-
-
-
-
-
-
-
-# print(Energy, Date, GantryAngle)
-
-
-# sheets_dict = {float(old_key): val for old_key, val in Data_Dict.items()} #Converts the Energy keys from strings to floats so they can be sorted numerically
-
-# writer = ExcelWriter(os.path.join(dir,"Analysed Ref Data.xlsx"), engine = 'xlsxwriter') #Sets up the tool "writer" that will put results into excel
-
-
-# for key in sorted(set(sheets_dict)): #Cycles through all energies in the spreadsheet in ascending order (Tab titles)
-#     sheets_dict[key][0] += OffSet #Adds any offset present in the measurement defined by the user above
-#     (Data_Props) = OnePDD(DataFrame.from_dict([sheets_dict[key][0],sheets_dict[key][1]]).values.T.tolist(), key) #Run the scripts to perform peak analysis and gamma analysis
-#     print(Date)
-#     wDate = Date.index(str(key)
-#     print(wDate)
-
-    # print(Data_Props.__dict__)
-
-#     sheets_dict[key]['Measured Properties'] = '' #Creates new empty key to insert results into dictionary
-#     sheets_dict[key]["Results"] = '' #Creates new empty key to insert results into dictionary
-#     for x in range (0,len(list(Data_Props.__dict__.keys()))): # Cycle through the results and paste them into the dictionary
-#         sheets_dict[key]["Measured Properties"][x] = list(Data_Props.__dict__.keys())[x] # Inputting the Titles
-#         sheets_dict[key]["Results"][x] = list(Data_Props.__dict__.values())[x] # Inputting the Data 1 results
-#
-#     DF = DataFrame.from_dict(sheets_dict[key]) # Convert data of the key enery into a dataframe to write to excel
-#     DF.update(DF.iloc[0:11,2:4].sort_values("Measured Properties").reset_index(drop=True)) # Reorder the results section
-#     DF.to_excel(writer, sheet_name=str(key)) # Paste results dataframe into excel
-#     worksheet = writer.sheets[str(key)] # Open key energy worksheet to paste image into
-#
-#     # Following lines set the widths of the columns to tidy up a bit.
-#     worksheet.set_column('A:A', 3.29)
-#     worksheet.set_column('B:C', 11.14)
-#     worksheet.set_column('D:D', 19.29)
-#     worksheet.set_column('E:E', 11.29)
-#
-# writer.save() # Saves results workbook
+conn.commit() # The commit line locks in the database entry.
 
 msgbox("Code has finished running", title="All Energies Completed")
