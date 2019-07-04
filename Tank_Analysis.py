@@ -27,7 +27,23 @@ if Gantry == None: # This section ensures a button is selected
     msgbox("Please re-run the code and select a room")
     exit()
 
-Device = 'Giraffe [1]'
+Device = buttonbox(msg="Which Chamber was used?",title='Select Chamber', choices=('StingRay [1]','Bragg Peak [1]'), cancel_choice = '') #Pop up box to select device used. This must match the file type.
+
+# These if loops ensure the filetype matches the selected Device
+
+if Device == 'StingRay [1]':
+    if os.listdir(dir)[0].endswith('.mcc') != True:
+        msgbox("Device does not match filetype. Please re run the code and select the correct device/folder", "Device/File Type Error")
+        exit()
+
+if Device == 'Bragg Peak [1]':
+    if os.listdir(dir)[0].endswith('.mcc') != True:
+        msgbox("Device does not match filetype. Please re run the code and select the correct device/folder", "Device/File Type Error")
+        exit()
+
+if Device == None: # This section ensures a button is selected
+    msgbox("Please re-run the code and select a device")
+    exit()
 
 OffSet = enterbox("Enter WET Offset (mm)", "WET Offset", ('0')) #User inputs offset in terms of water equivalent thickness (due to tank wall chamber thickness etc.)
 
@@ -65,16 +81,7 @@ Operator = choicebox("Who performed the measurements?", "Operator", Operators) #
 # It still has to test the filetype and extract all the data, but the code only needs the TD or "Test Date"
 ####################
 
-
-TEST_Dict['TEST'],TD = ReadGiraffe(os.path.join(dir,os.listdir(dir)[0]))
-
-#The ReadGiraffe doesn't produce gantry angle because it's not in the header. This requires user input
-GA = enterbox("Enter Measurement Gantry Angle", "Gantry Angle during acquisition", ('270'))
-try: # Ensure entered GA value is a sensible entry
-    float(GA)
-except ValueError:
-    msgbox("Please re-run the program and enter an appropriate value for the Gantry Angle", title="Gantry Angle Value Error")
-    exit()
+TEST_Dict['TEST'],TE,TD,GA = ReadTank(os.path.join(dir,os.listdir(dir)[0]))
 
 #This is the first write to the database as a session the table is called MLICenergy and requires the inputs listed below
 sql1 =       ('''
@@ -97,14 +104,7 @@ for filename in os.listdir(dir): # Loop through each file in the directory
     #Go through file, check file type and extract Data
     ####################
 
-    Data_Dict[name], D = ReadGiraffe(os.path.join(dir,filename)) # This function is in the PDD module and reads csv files produced by the giraffe.
-    try: # Giraffe files don't have energy in the header, it is taken from the file name
-        float(name)
-    except ValueError:
-        msgbox("Files must be labelled with the energy of the bragg peak, please rename files", title="File Name Error")
-        exit()
-
-    E=float(name) # For Giraffe Files, the energy is taken from the filename of the data, it's not in the data
+    Data_Dict[name], E, D, GA = ReadTank(os.path.join(dir,filename)) # This function is in the PDD module and reads MCC files.
 
     if float(name) != float(E): # Checks title names against data names (mainly for MCC files as for giraffe files, E is taken from name)
         BadName.append([name,E]) # Creates list of files which are incorrectly labelled
