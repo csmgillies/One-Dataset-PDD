@@ -12,7 +12,7 @@ import pypyodbc
 root = Tk() #Open TK for a File Dialog
 root.withdraw() #Hides the tk Pop-up window
 
-dir = filedialog.askdirectory() #Asks user to select folder containing data in MCC or CSV format
+dir = filedialog.askdirectory(title='Please Select Folder containing Test Data') #Asks user to select folder containing data in MCC or CSV format
 if dir == None:
     exit()
 
