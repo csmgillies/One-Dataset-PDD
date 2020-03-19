@@ -71,7 +71,7 @@ conn = pypyodbc.connect(
         r'PWD=1234;'
         )
 cursor = conn.cursor()
-cursor.execute('select * from Operators') #This line adds the "operators" table to the cursor
+cursor.execute('select * from Operators Query') #This line adds the "operators" table to the cursor
 
 for row in cursor.fetchall(): # This Fetches the data from the cursor
     Operators.append(row[2]) # This fetches the names and appends them to the operators list.

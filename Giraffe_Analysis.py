@@ -47,9 +47,11 @@ OffSet=float(OffSet) # OffSet is entered as a string - this converts it to a flo
 # The important bit is the DBQ= bit where you put the location of the database back end.
 conn = pypyodbc.connect(
         r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};'
-        r'DBQ=C:/Users/cgillies/Desktop/Python_3/GIT Some/TwoDataSets-PDD/AssetsDatabase_beCG.accdb;'
-        r'PWD=1234;'
+        r'DBQ=O:/protons/Work in Progress/Christian/Database/Proton/AssetsDatabase_be - CB.accdb'
         )
+
+        # C:/Users/cgillies/Desktop/Python_3/GIT Some/TwoDataSets-PDD/AssetsDatabase_beCG.accdb;'
+        # r'PWD=1234;'
 cursor = conn.cursor()
 cursor.execute('select * from Operators') #This line adds the "operators" table to the cursor
 

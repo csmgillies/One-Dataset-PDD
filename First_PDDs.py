@@ -61,7 +61,14 @@ for key in sorted(TestData.keys()): # Loop through each energy supplied in the M
     worksheet.set_column('E:E', 12.0)
 
     chart = workbook.add_chart({'type': 'scatter'}) # Creates a chart object
-    chart.add_series({'name': [str(int(key)),0,1],'categories': [str(int(key)),1,0,1+len(TestData[key][0]),0],'values': "='"+str(int(key))+"'!$B$2:$B$"+str(1+len(TestData[key][1])),'y2_axis':0}) # Selects the required data for the plot
+    chart.add_series({
+        'name': [str(int(key)),0,1],
+        'categories': [str(int(key)),1,0,1+len(TestData[key][0]),0],
+        'values': "='"+str(int(key))+"'!$B$2:$B$"+str(1+len(TestData[key][1])),
+        'y2_axis':0,
+        'line': {'color':'blue', 'width': 1,},
+        'marker': {'type':'none'},
+    }) # Selects the required data for the plot
     chart.set_y_axis({'min':0}) # Sets Y axis minimum
     chart.set_size({'width': 1300, 'height':650}) # Sets size of the chart object
     chart.set_title({'name': "PDD for %1.1f MeV"%key}) #Makes the title including the energy
